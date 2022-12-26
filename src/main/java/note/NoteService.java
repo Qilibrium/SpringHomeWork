@@ -27,9 +27,7 @@ public Map<Long, Note> add(String title, String content){
         note.setTitle(title);
         note.setContent(content);
         notes.put(id, note);
-        System.out.println("create = " + notes);
     }
-
     return notes;
 }
 // get all notes
@@ -55,7 +53,6 @@ public void deleteById(long id){
             note.setTitle(title);
             note.setContent(content);
             notes.put(idCode, note);
-            System.out.println("new note = " + note);
         }
    else if(!notes.containsKey(id)){
        throw new IllegalStateException("There is no value to update for key '"+id+"'.");
