@@ -1,10 +1,10 @@
 package note;
-
 import entity.Note;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -12,32 +12,28 @@ import java.util.Map;
 public class NoteService {
 
     //create unique code
-    private final long idCode = ( long ) (Math.random() * Math.abs(900000000L));
+
     private final Map<Long,Note> notes = new HashMap<Long, Note>();
 
-// create new note
-public Map<Long, Note> add(String title, String content){
-    Note note = new Note();
-    Long id = idCode;
-    if (notes.containsKey(id)) {
-        throw new IllegalStateException("A value for "+id+" is already present.");
-    }
-    else  {
-        note.setId(id);
-        note.setTitle(title);
-        note.setContent(content);
-        notes.put(id, note);
-    }
-    return notes;
+    // create new note
+public Note add(Note note) {
+
+    note.setId(uniId());
+    notes.put(note.getId(), new Note( note.getTitle(), note.getContent()));
+    System.out.println("note = " + note);
+    return note;
 }
+
 // get all notes
-    public  Map<Long, Note> listAll(){
-        return notes;
-    }
+public List<Note> listAll(){
+    Note note = new Note();
+    List allList = new ArrayList<>(notes.entrySet());
+    return allList;
+}
+
 
 // delete note by id
 public void deleteById(long id){
-
         if(notes.containsKey(id)){
     notes.remove(id);
         }
@@ -52,22 +48,29 @@ public void deleteById(long id){
        notes.get(id);
             note.setTitle(title);
             note.setContent(content);
-            notes.put(idCode, note);
+            notes.put(uniId(), note);
         }
-   else if(!notes.containsKey(id)){
-       throw new IllegalStateException("There is no value to update for key '"+id+"'.");
-        } else if (notes.values() == null) {
-            throw new IllegalArgumentException("Value cannot be null.");
-        }
-    }
+   else if(!notes.containsKey(id)) {
+       throw new IllegalStateException("There is no value to update for key '" + id + "'.");
+   }
+}
 
 // get note by id
     public  Note getById(long id) {
         return notes.get(id);
     }
-
+    
+//method create Id
+    public static final long uniId(){
+        long a =  ( long ) (Math.random() * Math.abs(900000000L));
+        long b = 1;
+        long uniIdCode = a*b;
+        return uniIdCode;
 
     }
+
+
+}
 
 
 

@@ -1,9 +1,10 @@
 package entity;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
-public class Note {
+
+@Component
+public class Note  {
 
     private long id;
     private String title;
@@ -13,7 +14,7 @@ public class Note {
     public Note(){
     }
 
-    public Note(long id, String title, String content) {
+    public Note(String title, String content) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -46,8 +47,7 @@ public class Note {
     @Override
     public String toString() {
         return "Note{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
+                "title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 '}';
     }
