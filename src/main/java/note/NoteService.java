@@ -43,24 +43,14 @@ public void deleteById(long id){
 public void update(Note note) {
 
     if(notes.containsKey(note.getId())){
-    //---first method
-    note.setId(note.getId());
-    note.setTitle(note.getTitle());
-    note.setContent(note.getContent());
-    notes.put(note.getId(), note);
-
-//---second method
-//    Note note1 = notes.get(note.getId());
-//    note.setId(note.getId());
-//    note.setTitle(note.getTitle());
-//    note.setContent(note.getContent());
-//    notes.replace(note.getId(), note1, note);
+        Note note1 = notes.get(note.getId());
+        note1.setTitle(note.getTitle());
+        note1.setContent(note.getContent());
 
 
 } else throw new IllegalStateException
             ("There is no value to update for key '" + note.getId() + "'.");
 }
-
 
 // get note by id
     public  Note getById(long id) {
