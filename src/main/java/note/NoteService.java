@@ -1,11 +1,10 @@
 package note;
 import entity.Note;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-@Service
+@Component
 public class NoteService {
     
     private final Map<Long,Note> notes = new HashMap<Long, Note>();
@@ -41,16 +40,27 @@ public void deleteById(long id){
 }
 
 // update note
-    public void update(long id, String title, String content){
-        Note note = new Note();
-   if(notes.containsKey(id)) {
-       note.setId(id);
-       note.setTitle(title);
-       note.setContent(content);
-       notes.put(id, note);
-   }
-   else throw new IllegalStateException("There is no value to update for key '" + id + "'.");
+public void update(Note note) {
+
+    if(notes.containsKey(note.getId())){
+    //---first method
+    note.setId(note.getId());
+    note.setTitle(note.getTitle());
+    note.setContent(note.getContent());
+    notes.put(note.getId(), note);
+
+//---second method
+//    Note note1 = notes.get(note.getId());
+//    note.setId(note.getId());
+//    note.setTitle(note.getTitle());
+//    note.setContent(note.getContent());
+//    notes.replace(note.getId(), note1, note);
+
+
+} else throw new IllegalStateException
+            ("There is no value to update for key '" + note.getId() + "'.");
 }
+
 
 // get note by id
     public  Note getById(long id) {
