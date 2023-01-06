@@ -1,14 +1,20 @@
-package note;
+package entity;
+
 
 import entity.Note;
+import entity.note.NoteRepository;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-@Service
-public class NoteListService {
+import java.util.stream.Collectors;
 
-    List<Note> notesList = new ArrayList<>();
+@Service
+public class NoteListService implements NoteRepository {
+
+
 
    public Note add(Note note){
         note.setId(uniId());
@@ -19,7 +25,7 @@ public class NoteListService {
     }
 
    public List<Note> listAll(){
-         return notesList;
+       return notesList;
     }
 
     public void update(Note note) {
@@ -42,14 +48,15 @@ public class NoteListService {
         return note;
     }
 
+    public Note getByIdLambda(long id){
+       return notesList.stream().filter(note -> note.getId()==id).findAny().orElseThrow(null);
+    }
+
    public void deleteById(long id) {
-       Note note = new Note();
-       for (Note note1 : notesList) {
-           if (note1.getId() == (id)){
-               notesList.remove(note1);
-           }
-       }
-       }
+       Note delete = notesList.stream().filter(note -> note.getId() == id).findAny().orElseThrow(null);
+       notesList.remove(delete);
+
+   }
 
 
     public static long uniId(){

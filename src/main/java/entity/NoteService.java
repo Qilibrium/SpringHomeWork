@@ -1,13 +1,15 @@
-package note;
+package entity;
 import entity.Note;
+import entity.note.NoteRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-@Component
-public class NoteService {
+@Service
+public class NoteService implements NoteRepository {
     
-    private final Map<Long,Note> notes = new HashMap<Long, Note>();
+
 
     // create new note
 public Note add(Note note) {
@@ -25,7 +27,6 @@ public Note add(Note note) {
 
 // get all notes
 public List<Note> listAll(){
-    Note note = new Note();
     List allList = new ArrayList<>(notes.entrySet());
     return allList;
 }
@@ -46,7 +47,6 @@ public void update(Note note) {
         Note note1 = notes.get(note.getId());
         note1.setTitle(note.getTitle());
         note1.setContent(note.getContent());
-
 
 } else throw new IllegalStateException
             ("There is no value to update for key '" + note.getId() + "'.");
