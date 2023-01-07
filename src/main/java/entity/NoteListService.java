@@ -38,16 +38,6 @@ public class NoteListService implements NoteRepository {
         }
     }
 
-    public Note getById(long id) {
-        Note note = new Note();
-        for (Note note1 : notesList) {
-            if (note1.getId() == (id)) {
-                return note1;
-            }
-        }
-        return note;
-    }
-
     public Note getByIdLambda(long id){
        return notesList.stream().filter(note -> note.getId()==id).findAny().orElseThrow(null);
     }
